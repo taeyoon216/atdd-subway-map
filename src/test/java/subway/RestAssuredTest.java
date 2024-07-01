@@ -1,5 +1,6 @@
 package subway;
 
+import io.restassured.RestAssured;
 import io.restassured.response.ExtractableResponse;
 import io.restassured.response.Response;
 import org.junit.jupiter.api.DisplayName;
@@ -16,8 +17,18 @@ public class RestAssuredTest {
     @Test
     void accessGoogle() {
         // TODO: 구글 페이지 요청 구현
-        ExtractableResponse<Response> response = null;
+        ExtractableResponse<Response> response;
 
+        // given
+        String url = "https://www.google.com";
+
+        // when
+        response = RestAssured.given().log().all()
+                .when().get(url)
+                .then().log().all()
+                .extract();
+
+        // then
         assertThat(response.statusCode()).isEqualTo(HttpStatus.OK.value());
     }
 }
